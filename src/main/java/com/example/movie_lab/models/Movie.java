@@ -1,15 +1,30 @@
 package com.example.movie_lab.models;
 
+import jakarta.persistence.*;
+
+@Entity(name = "movies")
 public class Movie {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "rating")
     private String rating;
+
+    @Column(name = "duration")
     private int duration;
 
-    public Movie(){
-
+    public Movie(String title, String rating, int duration){
+        this.title = title;
+        this.rating = rating;
+        this.duration = duration;
     }
+
+    public Movie(){}
 
     public int getId() {
         return id;

@@ -1,12 +1,15 @@
 package com.example.movie_lab.controllers;
 
 import com.example.movie_lab.models.Movie;
+import com.example.movie_lab.repositories.MovieList;
+import com.example.movie_lab.repositories.MovieRepository;
 import com.example.movie_lab.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -15,15 +18,24 @@ public class MovieController {
 
     @Autowired
     MovieService movieService;
+    @Autowired
+    MovieList movieList;
+
+    @Autowired
+    MovieRepository movieRepository;
 
     @PostMapping(value = "/movies")
-    public ResponseEntity<Movie> createNewMovie() {
-        Movie movie = movieService.createNewMovie();
-        return new ResponseEntity<Movie>(movie, HttpStatus.CREATED);
+    public ResponseEntity newMovie(@RequestBody Movie movie) {
+        movieService.createNewMovie();
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<Movie>
+    public  ResponseEntity<List<Movie>> getAllMovies(){
+        List<Movie> movies = movieService.getAllMovies();
+        return new ResponseEntity<>(movies, HttpStatus.OK);
+    }
+
 
 
     @GetMapping(value = "/{id}")
@@ -36,4 +48,9 @@ public class MovieController {
         }
     }
 
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity updateMovieDuration(@RequestBody Movie movie, @PathVariable int duration) {
+        movieService.getMovie().setDuration(duration);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }
