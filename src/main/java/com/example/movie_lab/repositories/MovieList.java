@@ -4,18 +4,17 @@ import com.example.movie_lab.models.Movie;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 @Repository
 public class MovieList {
-    private ArrayList<Movie> movies;
+    private List<Movie> movies;
     public MovieList(){
         this.movies = new ArrayList<>();
     }
-
-    public ArrayList<Movie> getMovies() {
-        return movies;
+    public void addMovie (Movie movie){
+        this.movies.add(movie);
     }
-
-    public void setMovies(ArrayList<Movie> movies) {
-        this.movies = movies;
+    public Movie getMovieByID(int id){
+        return this.movies.get(id-1);
     }
 }
